@@ -70,10 +70,10 @@ TARGET_LINK_LIBRARIES(${CurrentExe} ${Libraries})
 #any tests you can comment out or delete the following line.
 # ADD_TEST(Testname ExecutableToRun arg1 arg2 arg3)
 
-ADD_TEST(ImageToVectorImage image2vector ${CMAKE_SOURCE_DIR}/images/cthead0.png ${CMAKE_SOURCE_DIR}/images/cthead1.png ${CMAKE_SOURCE_DIR}/images/cthead2.png ${CMAKE_SOURCE_DIR}/images/cthead3.png ${CMAKE_SOURCE_DIR}/images/cthead4.png ${CMAKE_SOURCE_DIR}/images/cthead5.png ctheadx.tif)
-ADD_TEST(ImageToVectorImageCompare ${IMAGE_COMPARE} ctheadx.tif ${CMAKE_SOURCE_DIR}/images/ctheadx.tif)
+ADD_TEST(ImageToVectorImage image2vector ${CMAKE_SOURCE_DIR}/images/cthead0.png ${CMAKE_SOURCE_DIR}/images/cthead1.png ${CMAKE_SOURCE_DIR}/images/cthead2.png ${CMAKE_SOURCE_DIR}/images/cthead3.png ${CMAKE_SOURCE_DIR}/images/cthead4.png ${CMAKE_SOURCE_DIR}/images/cthead5.png ctheadx.nrrd)
+ADD_TEST(ImageToVectorImageCompare ${IMAGE_COMPARE} ctheadx.nrrd ${CMAKE_SOURCE_DIR}/images/ctheadx.nrrd)
 
 FOREACH(i 0 1 2 3 4 5)
-  ADD_TEST(VectorToImage-${i} vector2image ${CMAKE_SOURCE_DIR}/images/ctheadx.tif cthead${i}.png ${i})
+  ADD_TEST(VectorToImage-${i} vector2image ${CMAKE_SOURCE_DIR}/images/ctheadx.nrrd cthead${i}.png ${i})
   ADD_TEST(VectorToImageCompare-${i} ${IMAGE_COMPARE} cthead${i}.png ${CMAKE_SOURCE_DIR}/images/cthead${i}.png)
 ENDFOREACH(i)
