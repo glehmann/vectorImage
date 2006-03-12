@@ -19,7 +19,7 @@ int main(int, char * argv[])
   ReaderType::Pointer reader = ReaderType::New();
   reader->SetFileName( argv[1] );
 
-  typedef itk::VectorImageToImageFilter< IType > FilterType;
+  typedef itk::VectorImageToImageFilter< VIType > FilterType;
   FilterType::Pointer filter = FilterType::New();
   filter->SetInput( reader->GetOutput() );
   filter->SetExtractComponentIndex( atoi(argv[3]) );

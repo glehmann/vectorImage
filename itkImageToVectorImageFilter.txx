@@ -99,7 +99,7 @@ ImageToVectorImageFilter<TInputImage, TOutputImage>
     OutputPixelType p( numberOfInputImages );
     for (unsigned int i=0; i < numberOfInputImages; i++)
       {
-      p[i] = inputItrVector[i]->Get();
+      p[i] = static_cast<typename OutputPixelType::ValueType>( inputItrVector[i]->Get() );
       ++(*inputItrVector[i]);
       }
     outputIt.Set(p );

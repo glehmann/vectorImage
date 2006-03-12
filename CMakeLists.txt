@@ -1,9 +1,6 @@
 #Change PROJECT_NAME to the name of your project
 PROJECT(vectorImage)
 
-# set the name of the input image used to run the test
-SET(INPUT_IMAGE ${CMAKE_SOURCE_DIR}/images/cthead1.png)
-
 #include some macros from another file...
 INCLUDE(IJMacros.txt)
 
@@ -73,5 +70,10 @@ TARGET_LINK_LIBRARIES(${CurrentExe} ${Libraries})
 #any tests you can comment out or delete the following line.
 # ADD_TEST(Testname ExecutableToRun arg1 arg2 arg3)
 
-ADD_TEST(Run check ${INPUT_IMAGE} out.png)
-ADD_TEST(CompareImage ${IMAGE_COMPARE} out.png ${CMAKE_SOURCE_DIR}/images/test.png)
+ADD_TEST(ImageToVectorImage image2vector ${CMAKE_SOURCE_DIR}/images/cthead0.png ${CMAKE_SOURCE_DIR}/images/cthead1.png ${CMAKE_SOURCE_DIR}/images/cthead2.png ${CMAKE_SOURCE_DIR}/images/cthead3.png ${CMAKE_SOURCE_DIR}/images/cthead4.png ${CMAKE_SOURCE_DIR}/images/cthead5.png ctheadx.tif)
+ADD_TEST(ImageToVectorImageCompare ${IMAGE_COMPARE} ctheadx.tif ${CMAKE_SOURCE_DIR}/images/ctheadx.tif)
+
+FOREACH(i 0 1 2 3 4 5)
+  ADD_TEST(VectorToImage-${i} vector2image ${CMAKE_SOURCE_DIR}/images/ctheadx.tif cthead${i}.png ${i})
+  ADD_TEST(VectorToImageCompare-${i} ${IMAGE_COMPARE} cthead${i}.png ${CMAKE_SOURCE_DIR}/images/cthead${i}.png)
+ENDFOREACH(i)

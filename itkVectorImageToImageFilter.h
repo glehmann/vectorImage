@@ -25,7 +25,7 @@ namespace itk
 
 namespace Functor {  
  
-template< typename TInput >
+template< typename TInput, typename TOuput >
 class VectorImageToImageFunctor
 {
 public:
@@ -35,8 +35,8 @@ public:
   void SetExtractComponentIndex( unsigned int idx )
     { m_ExtractComponentIndex = idx; }
 
-  inline typename TInput::ValueType operator()( const typename TInput::PixelType & x )
-    { return x[m_ExtractComponentIndex]; }
+  inline typename TOuput::PixelType operator()( const typename TInput::PixelType & x )
+    { return static_cast<typename TOuput::PixelType>( x[m_ExtractComponentIndex] ); }
 
   bool operator != (const VectorImageToImageFunctor & l) const
     { return l.m_ExtractComponentIndex == m_ExtractComponentIndex; }
@@ -62,17 +62,15 @@ private:
  * \ingroup IntensityImageFilters  Multithreaded
  *
  */
-template <typename TOutputImage>
+template <typename TInputImage, typename TOutputImage=Image< typename TInputImage::ValueType, TInputImage::ImageDimension > >
 class ITK_EXPORT VectorImageToImageFilter :
     public
-UnaryFunctorImageFilter< VectorImage< typename TOutputImage::PixelType, TOutputImage::ImageDimension>, TOutputImage, 
-                        typename Functor::VectorImageToImageFunctor< VectorImage< typename TOutputImage::PixelType, TOutputImage::ImageDimension > > >
+UnaryFunctorImageFilter< TInputImage, TOutputImage, typename Functor::VectorImageToImageFunctor< TInputImage, TOutputImage > >
 {
 public:
   /** Standard class typedefs. */
   typedef VectorImageToImageFilter  Self;
-  typedef UnaryFunctorImageFilter< VectorImage< typename TOutputImage::PixelType, TOutputImage::ImageDimension>, TOutputImage, 
-                        typename Functor::VectorImageToImageFunctor< VectorImage< typename TOutputImage::PixelType, TOutputImage::ImageDimension > > >  Superclass;
+  typedef UnaryFunctorImageFilter< TInputImage, TOutputImage, typename Functor::VectorImageToImageFunctor< TInputImage, TOutputImage > > Superclass;
   typedef SmartPointer<Self>   Pointer;
   typedef SmartPointer<const Self>  ConstPointer;
 

@@ -28,16 +28,16 @@ namespace itk
 /**
  *
  */
-template <class TOutputImage>
-VectorImageToImageFilter<TOutputImage>
+template <class TInputImage, class TOutputImage>
+VectorImageToImageFilter<TInputImage, TOutputImage>
 ::VectorImageToImageFilter()
 {
   m_ExtractComponentIndex = 0;
 }
 
-template <class TOutputImage>
+template <class TInputImage, class TOutputImage>
 void
-VectorImageToImageFilter<TOutputImage>
+VectorImageToImageFilter<TInputImage, TOutputImage>
 ::BeforeThreadedGenerateData()
 {
   unsigned int vl = this->GetInput()->GetVectorLength();
@@ -49,9 +49,9 @@ VectorImageToImageFilter<TOutputImage>
 /**
  *
  */
-template <class TOutputImage>
+template <class TInputImage, class TOutputImage>
 void 
-VectorImageToImageFilter<TOutputImage>
+VectorImageToImageFilter<TInputImage, TOutputImage>
 ::PrintSelf(std::ostream& os, Indent indent) const
 {
   Superclass::PrintSelf(os,indent);
