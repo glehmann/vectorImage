@@ -4,7 +4,7 @@
 #include "itkSimpleFilterWatcher.h"
 
 #include "itkVectorImage.h"
-#include "itkVectorImageToImageFilter.h"
+#include "itkImageToVectorImageFilter.h"
 
 
 int main(int, char * argv[])
@@ -15,18 +15,19 @@ int main(int, char * argv[])
   typedef itk::VectorImage< PType, dim > VIType;
   typedef itk::Image< PType, dim > IType;
 
-  typedef itk::ImageFileReader< VIType > ReaderType;
+  typedef itk::ImageFileReader< IType > ReaderType;
   ReaderType::Pointer reader = ReaderType::New();
   reader->SetFileName( argv[1] );
 
-  typedef itk::VectorImageToImageFilter< IType > FilterType;
+  typedef itk::ImageToVectorImageFilter< IType, VIType > FilterType;
   FilterType::Pointer filter = FilterType::New();
-  filter->SetInput( reader->GetOutput() );
-  filter->SetExtractComponentIndex( atoi(argv[3]) );
+
+  for(int i=0; i<atoi(argv[3]); i++)
+    { filter->SetInput(i, reader->GetOutput() ); }
 
   itk::SimpleFilterWatcher watcher(filter, "filter");
 
-  typedef itk::ImageFileWriter< IType > WriterType;
+  typedef itk::ImageFileWriter< VIType > WriterType;
   WriterType::Pointer writer = WriterType::New();
   writer->SetInput( filter->GetOutput() );
   writer->SetFileName( argv[2] );

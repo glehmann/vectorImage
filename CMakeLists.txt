@@ -57,7 +57,11 @@ ENDIF(BUILD_WRAPPERS)
 #be linked to all the libraries you specified above. 
 #You can build more than one executable per project
 
-SET(CurrentExe "check")
+SET(CurrentExe "vector2image")
+ADD_EXECUTABLE(${CurrentExe} ${CurrentExe}.cxx)
+TARGET_LINK_LIBRARIES(${CurrentExe} ${Libraries})
+
+SET(CurrentExe "image2vector")
 ADD_EXECUTABLE(${CurrentExe} ${CurrentExe}.cxx)
 TARGET_LINK_LIBRARIES(${CurrentExe} ${Libraries})
 
